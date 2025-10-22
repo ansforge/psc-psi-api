@@ -44,7 +44,7 @@ La logique métier de l'API est décrite dans le schéma suivant :
 
 1. **Recherche initiale** :
    - L'API commence par rechercher les traits d'identité dans le système PSI.
-   - Si aucun compte PSI n'existe, une recherche est effectuée dans le RNIPP, le RPPS et le SEC PSC.
+   - Si aucun compte PSI n'existe, une recherche est effectuée dans le RNIPP, le RPPS et l'API-PSC.
 
 2. **Validation et enrôlement** :
    - Si les données sont valides et qu'une correspondance unique est trouvée, un compte PSI est créé ou mis à jour.
@@ -90,7 +90,7 @@ La logique métier de l'API est décrite dans le schéma suivant :
 - **409 Conflict** : Un compte PSI existe déjà pour ces traits d'identité.
 - **500 Internal Server Error** : Erreur interne.
 
-Pour plus de détails sur les schémas de requêtes et réponses, consultez le fichier Swagger : `PSI_swagger_18-09-25 2.yml`.
+Pour plus de détails sur les schémas de requêtes et réponses, consultez le fichier Swagger : `PSI_swagger_15-10-25.yml`.
 
 ---
 
