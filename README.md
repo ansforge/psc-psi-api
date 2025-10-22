@@ -181,7 +181,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 
 ## Ressources supplémentaires
 
-- **Swagger** : [PSI_swagger_18-09-25 2.yml](PSI_swagger_18-09-25%202.yml)
+- **Swagger** : [PSI_swagger_15-10-25.yml](PSI_swagger_15-10-25.yml)
 - **Schéma de la logique métier** : [Schema_RIPSC-204.jpeg](Schema_RIPSC-204.jpeg)
 - **Postman Collection** : À fournir si disponible.
 
