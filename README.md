@@ -38,7 +38,7 @@ Avant de commencer à utiliser l'API, assurez-vous de remplir les conditions sui
 La logique métier de l'API est décrite dans le schéma suivant :
 
 
-![Logique métier](PSI_Enrolement par un tiers (Logigramme).jpg)
+![Logique métier](PSI_Enrolement_par_un_tiers_(Logigramme).jpg)
 
 ### Résumé de la logique métier
 
@@ -182,7 +182,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 ## Ressources supplémentaires
 
 - **Swagger** : [PSI_swagger_15-10-25.yml](PSI_swagger_15-10-25.yml)
-- **Schéma de la logique métier** : [PSI_Enrolement par un tiers (Logigramme).jpg](PSI_Enrolement par un tiers (Logigramme).jpg)
+- **Schéma de la logique métier** : [PSI_Enrolement_par_un_tiers_(Logigramme).jpg](PSI_Enrolement_par_un_tiers_(Logigramme).jpg)
 - **Postman Collection** : À fournir si disponible.
 
 ---
