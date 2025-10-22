@@ -38,7 +38,7 @@ Avant de commencer à utiliser l'API, assurez-vous de remplir les conditions sui
 La logique métier de l'API est décrite dans le schéma suivant :
 
 
-![Logique métier](Schema_RIPSC-204.jpeg)
+![Logique métier](PSI_Enrolement par un tiers (Logigramme).jpg)
 
 ### Résumé de la logique métier
 
