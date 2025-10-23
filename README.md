@@ -184,6 +184,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 - **Swagger** : [PSI_swagger_15-10-25.yml](PSI_swagger_15-10-25.yml)
 - **Schéma de la logique métier** : [PSI_Enrolement_par_un_tiers_(Logigramme).jpg](PSI_Enrolement_par_un_tiers_(Logigramme).jpg)
 - **Postman Collection** : À fournir si disponible.
+- **Contenu du bouchon RPPS** : [Personnes_RPPS.csv](Personnes_RPPS.csv).
 
 ---
 
