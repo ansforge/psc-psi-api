@@ -15,7 +15,7 @@
 L'API PSI permet d'enrôler des tiers dans le système PSI (Pro Santé Identité). Elle est conçue pour un usage interne et externe tels que le le RPPS et les établissements de santé afin d'enregistrer les professionnels en santé tout en validant la qualité des donnéés d'identité auprès du RNIPP.
 
 L'API est exposée via **Gravitee** de l' ANS (Agence du Numérique en Santé) à l'URL suivante :  
-**[https://apimgmtui.integ.api.esante.gouv.fr/](https://apimgmtui.integ.api.esante.gouv.fr/)**
+**[https://psi-partenaire.gateway.api.esante.gouv.fr/](https://psi-partenaire.gateway.api.esante.gouv.fr/)**
 
 Cette documentation fournit une vue d'ensemble de la logique métier, des spécifications techniques et des exemples d'utilisation pour faciliter l'intégration.
 
