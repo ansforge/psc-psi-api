@@ -181,7 +181,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 
 ## Ressources supplémentaires
 
-- **Swagger** : [PSI_swagger_v0.4.0_01-12-2025](PSI_swagger_v0.4.0_01-12-2025.yml)
+- **Swagger** : [PSI_swagger_v0.4.0_01-12-2025.yml](PSI_swagger_v0.4.0_01-12-2025.yml)
 - **Schéma de la logique métier** : [PSI_Enrolement_par_un_tiers_(Logigramme).jpg](PSI_Enrolement_par_un_tiers_(Logigramme).jpg)
 - **Postman Collection** : [Collection POSTMAN PSI](https://www.postman.com/red-rocket-401896/workspace/ans-prosanteconnect/collection/28025856-82d54247-aaae-487c-a421-f24127f1b8fd?action=share&source=copy-link&creator=28025856&active-environment=4825be29-6bab-4427-a868-28d0aca2433d).
 - **Contenu du bouchon RPPS** : [Personnes_RPPS.csv](Personnes_RPPS.csv).
