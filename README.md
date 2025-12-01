@@ -73,7 +73,7 @@ La logique métier de l'API est décrite dans le schéma suivant :
 ```json
 {
   "lastName": "DUPONT",
-  "firstNames": ["Jean", "Pierre"],
+  "firstNames": "Jean Pierre",
   "birthDate": "1990-01-01",
   "genderCode": "M",
   "birthLocationCode": "75056",
@@ -102,7 +102,7 @@ Voici les principaux schémas utilisés par l'API :
 - **Description** : Représente les données nécessaires pour créer ou mettre à jour une identité.
 - **Propriétés** :
   - `lastName` (string) : Nom de famille.
-  - `firstNames` (array of string) : Liste des prénoms.
+  - `firstNames` (string) : Liste des prénoms séparés par un espace.
   - `birthDate` (string) : Date de naissance (format ISO-8601).
   - `genderCode` (string) : Sexe (`M`, `F`, `I`).
   - `birthLocationCode` (string) : Code INSEE du lieu de naissance.
@@ -113,7 +113,7 @@ Voici les principaux schémas utilisés par l'API :
 #### 2. **RegisterOrUpdateIdentityResponseDto**
 - **Description** : Réponse retournée après la création ou mise à jour d'une identité.
 - **Propriétés** :
-  - `rppsIdentifiers` (array of string) : Liste des identifiants RPPS associés.
+  - `rppsIdentifiers` (string) : identifiant RPPS associé.
   - `identityTraits` (object) : Traits d'identité trouvés.
 
 Pour une liste complète des schémas, référez-vous au fichier Swagger.
@@ -130,7 +130,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 -H "Authorization: Bearer <token>" \
 -d '{
   "lastName": "DUPONT",
-  "firstNames": ["Jean", "Pierre"],
+  "firstNames": "Jean Pierre",
   "birthDate": "1990-01-01",
   "genderCode": "M",
   "birthLocationCode": "75056",
@@ -146,7 +146,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
   "rppsIdentifiers": ["8100112345678"],
   "identityTraits": {
     "lastName": "DUPONT",
-    "firstNames": ["Jean", "Pierre"],
+    "firstNames": "Jean Pierre",
     "birthDate": "1990-01-01",
     "genderCode": "M",
     "birthLocationCode": "75056"
@@ -159,7 +159,7 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 ```json
 {
   "lastName": "DUPONT",
-  "firstNames": ["Jean", "Pierre"],
+  "firstNames": "Jean Pierre",
   "birthDate": "01-01-1990",  // Format incorrect
   "genderCode": "M",
   "birthLocationCode": "75056"
