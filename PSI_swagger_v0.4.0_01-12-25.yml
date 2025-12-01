@@ -216,7 +216,7 @@ components:
         Obligatoire lorsque l'appelant est un ES, facultatif lorsque l'appelant est
         un RPPS.
       pattern: ^[0-9]{4,15}$
-      example: '612345678'
+      example: '0612345678'
     Identifier:
       type: string
       description: 'Identifiant de l''appelant :
@@ -254,8 +254,6 @@ components:
           $ref: '#/components/schemas/BirthDate'
         genderCode:
           $ref: '#/components/schemas/GenderCode'
-        frenchNationality:
-          $ref: '#/components/schemas/FrenchNationality'
         birthLocationCode:
           $ref: '#/components/schemas/BirthLocationCode'
         birthPlace:
@@ -264,8 +262,6 @@ components:
           $ref: '#/components/schemas/ProfessionalLastName'
         email:
           $ref: '#/components/schemas/Email'
-        phonePrefix:
-          $ref: '#/components/schemas/PhonePrefix'
         phone:
           $ref: '#/components/schemas/Phone'
         identifier:
@@ -287,8 +283,6 @@ components:
           $ref: '#/components/schemas/BirthPlace'
         professionalLastName:
           $ref: '#/components/schemas/ProfessionalLastName'
-        frenchNationality:
-          $ref: '#/components/schemas/FrenchNationality'
       description: Traits d'identité de la personne en lien, tels que trouvés au RNIPP
     RegisterOrUpdateIdentityResponseDto:
       type: object
@@ -790,20 +784,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErreurChamp'
-    FrenchNationality:
-      type: boolean
-      description: Indique si la personne possède la nationalité française.
-      example: true
-      default: true
-    PhonePrefix:
-      minLength: 1
-      type: string
-      description: Indicatif téléphonique (alphanumérique). Si non renseigné, la valeur
-        par défaut utilisée est "+33". Obligatoire lorsque l'appelant est un ES, facultatif
-        lorsque l'appelant est un RPPS.
-      pattern: ^\+?[0-9A-Za-z]{1,5}$
-      example: '+33'
-      default: '+33'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
