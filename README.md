@@ -113,7 +113,7 @@ Voici les principaux schémas utilisés par l'API :
 #### 2. **RegisterOrUpdateIdentityResponseDto**
 - **Description** : Réponse retournée après la création ou mise à jour d'une identité.
 - **Propriétés** :
-  - `rppsIdentifiers` (string) : identifiant RPPS associé.
+  - `rppsIdentifiers` (array of string) : Liste des identifiants RPPS associés.
   - `identityTraits` (object) : Traits d'identité trouvés.
 
 Pour une liste complète des schémas, référez-vous au fichier Swagger.
