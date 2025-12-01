@@ -1,0 +1,811 @@
+openapi: 3.0.3
+info:
+  title: PSI swagger 01-12-2025
+  version: v0
+servers:
+- url: https://gateway.integ.api.esante.gouv.fr/psi-dev
+  description: Gravitee
+paths:
+  /v1/identities:
+    post:
+      tags:
+      - identity-controller
+      summary: Crée une nouvelle identité PSI
+      operationId: registerOrUpdateIdentity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterOrUpdateIdentityRequestDto'
+        required: true
+      responses:
+        '201':
+          description: Identité créée. Le RNIPP a trouvé la personne sans divergence
+            d'état civil (code réponse identification RNIPP = 2)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterOrUpdateIdentityResponseDto'
+        '400':
+          description: 'La requête est invalide : le schéma des données n''est pas
+            respecté, des champs obligatoires sont manquants ou le RNIPP n''a pas
+            trouvé d''identité sans divergence pour les traits d''identité fournis
+            (code réponse identification RNIPP <> 2,8)'
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ValidationErrorRnippDto'
+                - $ref: '#/components/schemas/ValidationSyntaxErrorRnippDto'
+                - $ref: '#/components/schemas/ValidationErrorDto'
+              examples:
+                rnippWithDivergences:
+                  summary: Divergence de traits d'identité
+                  value:
+                    timestamp: 2024-02-27 14:45:00.593000+00:00
+                    status: 400
+                    error: Une identité a été trouvé au RNIPP mais elle diverge des
+                      traits d'identité fournis
+                    code: E04_U010_KO_RNIPP_FOUND_WITH_DIVERGENCES
+                    rnippData:
+                      metadonnees:
+                        dateIdentification: 2025-06-03 09:17:45+00:00
+                        codeReponseIdentification: 3
+                        divergences:
+                          nom: true
+                          prenoms: false
+                          sexe: false
+                          dateNaissance: false
+                          lieuNaissance: false
+                        statutDuNomIdentifie: O
+                      individu:
+                        identites:
+                        - statut: O
+                          nom: DURAND
+                          prenoms:
+                          - Jeanne
+                          - Catherine
+                          - Marguerite
+                        - statut: C
+                          nom: DUPONT
+                        sexe: F
+                        naissance:
+                          date: 1980-07-15
+                          lieu:
+                            code: '57463'
+                            libelleCommune: Metz
+                            libellePays: France
+                          numeroActe: '1234'
+                        deces:
+                          date: 2025-06-15
+                          lieu:
+                            code: '76540'
+                            libelleCommune: Rouen
+                            libellePays: France
+                          numeroActe: '15'
+                    path: /v1/identities
+                rnippSyntaxError:
+                  summary: Erreur de syntaxe du RNIPP
+                  value:
+                    timestamp: 2024-02-27 14:45:00.593000+00:00
+                    status: 400
+                    error: La demande a été rejetée par le RNIPP en raison d'erreurs
+                      de syntaxe détectées dans les éléments d'état civil
+                    code: E04_U010_KO_RNIPP_SYNTAX_ERROR
+                    rnippData:
+                      metadonnees:
+                        dateIdentification: 2025-06-03 09:17:45+00:00
+                        codeReponseIdentification: 9
+                        divergences:
+                          nom: false
+                          prenoms: false
+                          sexe: false
+                          dateNaissance: false
+                          lieuNaissance: false
+                        statutDuNomIdentifie: null
+                    path: /v1/identities
+                badFields:
+                  summary: Erreur de saisie
+                  value:
+                    timestamp: 2024-02-27 14:45:00.593000+00:00
+                    status: 400
+                    error: Des erreurs ont été détectées lors de la validation. Veuillez
+                      consulter le détail
+                    code: E04_U010_KO_FORMAT_DATE
+                    detail:
+                    - object: registerOrUpdateIdentityRequestDto
+                      field: birthDate
+                      message: 'Le format de date est invalide. Format attendu : aaaa-MM-jj'
+                      rejected: 01-01-2000
+                      constraint: Pattern
+                    path: /v1/identities
+        '404':
+          description: Le RNIPP n'a pas trouvé la personne (code réponse identification
+            RNIPP = 8)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RnippNotFoundErrorDto'
+        '409':
+          description: Le compte PSI existe déjà pour ces traits d'identité
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAlreadyExistsErrorDto'
+              examples:
+                accountAlreadyExistsOneRpps:
+                  summary: Compte PSI déjà existant (un identifiant RPPS)
+                  value:
+                    timestamp: '2025-09-17T12:40:04.8687343+02:00'
+                    status: 409
+                    psiIdentifier: 550e8400-e29b-41d4-a716-446655440000
+                    rppsIdentifiers:
+                    - '810000000000'
+                    error: Le compte PSI existe déjà.
+                    code: E04_U010_KO_PSI_ACCOUNT_ALREADY_EXIST_AND_HAVE_ONE_RPPS_ID
+                    path: /v1/identities
+        '500':
+          description: Erreur interne serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalServerErrorDto'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    FirstNames:
+      type: string
+      description: Prénom(s) de l'état civil tels que trouvés au RNIPP.
+      example: Jean Pierre
+    LastName:
+      type: string
+      description: Nom de famille de l'état civil tel que trouvé au RNIPP
+      example: DUPONT
+    BirthDate:
+      minLength: 1
+      type: string
+      description: Date de naissance au format ISO-8601
+      example: 1995-02-15
+    GenderCode:
+      type: string
+      description: 'Sexe :
+
+        - "M" : Masculin
+
+        - "F" : Féminin
+
+        - "I" : Inconnu
+
+        '
+      example: M
+      enum:
+      - M
+      - F
+      - I
+    BirthLocationCode:
+      maxLength: 5
+      minLength: 5
+      type: string
+      description: Code INSEE du lieu de naissance. Correspond au code INSEE de la
+        commune de naissance si le pays de naissance est la france ou au code INSEE
+        du pays de naissance si la personne est née à l'étranger
+      example: '99103'
+    BirthPlace:
+      minLength: 1
+      type: string
+      description: Obligatoire uniquement si le code lieu naissance (birthLocationCode)
+        est un pays étranger. Correspond au label de la ville étrangère à la France
+      example: OSLO
+    ProfessionalLastName:
+      minLength: 1
+      type: string
+      description: Nom de famille professionnel
+      example: Durant
+    Email:
+      minLength: 1
+      type: string
+      description: Adresse email de contact. Obligatoire lorsque l'appelant est un
+        ES, facultative lorsque l'appelant est un RPPS.
+      format: email
+      example: jean.dupont@gmail.com
+    Phone:
+      minLength: 1
+      type: string
+      description: Numéro de téléphone sans indicatif, uniquement composé de chiffres.
+        Obligatoire lorsque l'appelant est un ES, facultatif lorsque l'appelant est
+        un RPPS.
+      pattern: ^[0-9]{4,15}$
+      example: '612345678'
+    Identifier:
+      type: string
+      description: 'Identifiant de l''appelant :
+
+        - Pour un ES : facultatif, de type RPPS, FINESS ou SIRET.
+
+        - Pour un RPPS : obligatoire et de type RPPS.'
+      example: '8100112345678'
+    PsiIdentifier:
+      type: string
+      description: Identifiant PSI du compte déjà créé
+      example: 550e8400-e29b-41d4-a716-446655440000
+      format: uuid
+    RppsIdentifiers:
+      type: array
+      description: Liste des identifiants RPPS associés à la personne
+      example:
+      - '810000000000'
+      items:
+        type: string
+    RegisterOrUpdateIdentityRequestDto:
+      required:
+      - birthDate
+      - birthLocationCode
+      - firstNames
+      - genderCode
+      - lastName
+      type: object
+      properties:
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        firstNames:
+          $ref: '#/components/schemas/FirstNames'
+        birthDate:
+          $ref: '#/components/schemas/BirthDate'
+        genderCode:
+          $ref: '#/components/schemas/GenderCode'
+        frenchNationality:
+          $ref: '#/components/schemas/FrenchNationality'
+        birthLocationCode:
+          $ref: '#/components/schemas/BirthLocationCode'
+        birthPlace:
+          $ref: '#/components/schemas/BirthPlace'
+        professionalLastName:
+          $ref: '#/components/schemas/ProfessionalLastName'
+        email:
+          $ref: '#/components/schemas/Email'
+        phonePrefix:
+          $ref: '#/components/schemas/PhonePrefix'
+        phone:
+          $ref: '#/components/schemas/Phone'
+        identifier:
+          $ref: '#/components/schemas/Identifier'
+    IdentityTraitsDto:
+      type: object
+      properties:
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        firstNames:
+          $ref: '#/components/schemas/FirstNames'
+        birthDate:
+          $ref: '#/components/schemas/BirthDate'
+        genderCode:
+          $ref: '#/components/schemas/GenderCode'
+        birthLocationCode:
+          $ref: '#/components/schemas/BirthLocationCode'
+        birthPlace:
+          $ref: '#/components/schemas/BirthPlace'
+        professionalLastName:
+          $ref: '#/components/schemas/ProfessionalLastName'
+        frenchNationality:
+          $ref: '#/components/schemas/FrenchNationality'
+      description: Traits d'identité de la personne en lien, tels que trouvés au RNIPP
+    RegisterOrUpdateIdentityResponseDto:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PsiIdentifier'
+        rppsIdentifiers:
+          $ref: '#/components/schemas/RppsIdentifiers'
+        identityTraits:
+          $ref: '#/components/schemas/IdentityTraitsDto'
+    ErrorDetailDto:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Objet porteur de l'erreur
+          example: registerOrUpdateIdentityRequestDto
+        field:
+          type: string
+          description: Champ à l'origine de l'erreur
+          example: birthLocationCode
+        message:
+          type: string
+          description: Message détaillant l'erreur
+          example: Le code du pays de naissance doit comporter exactement 5 caractères.
+        rejected:
+          type: string
+          description: Valeur rejetée
+          example: '991029'
+        constraint:
+          type: string
+          description: Type de contrainte non repectée par le champ en erreur
+          example: Pattern
+    ValidationSyntaxErrorRnippDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2024-02-27 14:45:00.593000+00:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 400
+        error:
+          type: string
+          description: Message d'erreur
+          example: La demande a été rejetée par le RNIPP en raison d'erreurs de syntaxe
+            détectées dans les éléments d'état civil
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_RNIPP_SYNTAX_ERROR
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+        dataRnipp:
+          $ref: '#/components/schemas/ShortIdentificationView'
+    ValidationErrorRnippDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2024-02-27 14:45:00.593000+00:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 400
+        error:
+          type: string
+          description: Message d'erreur
+          example: Une identité a été trouvé au RNIPP mais elle diverge des traits
+            d'identité fournis
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_RNIPP_FOUND_WITH_DIVERGENCES
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+        dataRnipp:
+          $ref: '#/components/schemas/IdentificationView'
+    ValidationErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2024-02-27 14:45:00.593000+00:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 400
+        error:
+          type: string
+          description: Message d'erreur
+          example: 'Le format de date est invalide. Format attendu : aaaa-mm-jj'
+          enum:
+          - Le nom est obligatoire
+          - Le prénom est obligatoire
+          - Le genre est obligatoire
+          - La date de naissance est obligatoire
+          - Le lieu de naissance est obligatoire
+          - L'email est obligatoire pour un appelant ES
+          - Le numéro de téléphone est obligatoire pour un appelant ES
+          - L'indicatif téléphonique est obligatoire pour un appelant ES
+          - 'Le format de date est invalide. Format attendu : aaaa-mm-jj'
+          - 'Le code genre fourni est invalide. Valeur autorisée : F ou M ou I'
+          - L'email fourni est invalide
+          - Le numéro de téléphone n'est pas valide
+          - L'indicatif téléphonique n'est pas valide
+          - L'adresse fournie n'est pas utilisable (vous pouvez la vérifier sur https://adresse.data.gouv.fr/)
+          - Lorsque le pays de naissance est la france (ou n'est pas renseigné), le
+            code du lieu de naissance doit comporte exactement 5 caractères
+          - Le code du pays de naissance doit comporter exactement 5 caractères
+          - L'identifiant doit être de type RPPS, FINESS ou SIRET
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_FORMAT_DATE
+          enum:
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_LAST_NAME
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_FIRST_NAMES
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_GENDER_CODE
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_BIRTH_DATE
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_BIRTH_PLACE
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_EMAIL
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_PHONE
+          - E04_U010_KO_FORMAT_REQUIRED_FIELD_PHONE_PREFIX
+          - E04_U010_KO_FORMAT_DATE
+          - E04_U010_KO_FORMAT_GENDER
+          - E04_U010_KO_FORMAT_EMAIL
+          - E04_U010_KO_FORMAT_PHONE
+          - E04_U010_KO_FORMAT_PHONE_PREFIX
+          - E04_U010_KO_FORMAT_ADDRESS
+          - E04_U010_KO_FORMAT_BIRTH_PLACE
+          - E04_U010_KO_FORMAT_BIRTH_LOCATION_CODE
+          - E04_U010_KO_FORMAT_IDENTIFIER
+        detail:
+          type: array
+          description: Détails de l'erreur
+          items:
+            $ref: '#/components/schemas/ErrorDetailDto'
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+    RnippNotFoundErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2025-09-17 12:40:04.868734+02:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 404
+        rppsIdentifiers:
+          $ref: '#/components/schemas/RppsIdentifiers'
+        error:
+          type: string
+          description: Message d'erreur
+          example: La personne n'existe pas au RNIPP, le compte PSI ne peut pas être
+            créé
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_RNIPP_NOT_FOUND
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+    AccountAlreadyExistsErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2025-09-17 12:40:04.868734+02:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 409
+        psiIdentifier:
+          $ref: '#/components/schemas/PsiIdentifier'
+        rppsIdentifiers:
+          $ref: '#/components/schemas/RppsIdentifiers'
+        error:
+          type: string
+          description: Message d'erreur
+          example: Le compte PSI existe déjà.
+          enum:
+          - Le compte PSI existe déjà.
+          - Le compte PSI existe déjà et aucun identifiant RPPS n'a été trouvé pour
+            ces traits d'identité.
+          - Le compte PSI existe déjà et plusieurs identifiants RPPS ont été trouvés
+            pour ces traits d'identité.
+          - Le compte PSI existe déjà, la commande de carte a été effectuée avec succès.
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_PSI_ACCOUNT_ALREADY_EXIST_AND_HAVE_ONE_RPPS_ID
+          enum:
+          - E04_U010_KO_PSI_ACCOUNT_ALREADY_EXIST_AND_HAVE_N_RPPS_ID
+          - E04_U010_KO_PSI_ACCOUNT_ALREADY_EXIST_AND_HAVE_ONE_RPPS_ID
+          - E04_U010_KO_PSI_ACCOUNT_ALREADY_EXIST_AND_HAVE_ZERO_RPPS_ID
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+    GenericInternalServerErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Instant auquel s'est produit l'erreur
+          format: date-time
+          example: 2024-02-27 14:45:00.593000+00:00
+        status:
+          type: integer
+          description: Code statut HTTP
+          format: int32
+          example: 500
+        error:
+          type: string
+          description: Message d'erreur
+          example: Une erreur interne est survenue lors de l'enregistrement de l'identité,
+            veuillez réessayer
+        code:
+          type: string
+          description: Code interne de l'erreur
+          example: E04_U010_KO_INTERNAL_ERROR
+        path:
+          type: string
+          description: URL de base de la ressource à l'origine de l'erreur
+          example: /v1/identities
+    NomOuPrenom:
+      pattern: ^[-' A-Za-zÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸÆŒàâäçéèêëîïôöùûüÿæœ]{1,300}$
+      type: string
+      description: Nom ou prénom avec lettres accentuées, ligatures, apostrophes,
+        tirets ou espaces entre jusqu’à 300 caractères
+      example: ''
+    Sexe:
+      type: string
+      description: 'Sexe :
+
+        - "M" : Masculin
+
+        - "F" : Féminin
+
+        - "I" : Inconnu
+
+        '
+      enum:
+      - M
+      - F
+      - I
+    ShortIdentificationView:
+      type: object
+      properties:
+        metadonnees:
+          type: object
+          properties:
+            dateIdentification:
+              type: string
+              format: date-time
+            codeReponseIdentification:
+              type: integer
+              description: 'Code indiquant la réponse du système d’identification
+                :
+
+                - 9 : demande rejetée au contrôle en raison d’erreurs de syntaxe
+
+                '
+              enum:
+              - 9
+            divergences:
+              type: object
+              properties:
+                nom:
+                  type: boolean
+                prenoms:
+                  type: boolean
+                sexe:
+                  type: boolean
+                dateNaissance:
+                  type: boolean
+                lieuNaissance:
+                  type: boolean
+            statutDuNomIdentifie:
+              type: string
+              description: 'Statut du nom identifié :
+
+                - "O" : Officiel
+
+                - "C" : Conjoint
+
+                - "AO" : Ancien officiel
+
+                - "AC" : Ancien conjoint
+
+                '
+              enum:
+              - O
+              - C
+              - AO
+              - AC
+      example:
+        metadonnees:
+          dateIdentification: 2025-06-03 09:17:45+00:00
+          codeReponseIdentification: 3
+          divergences:
+            nom: false
+            prenoms: false
+            sexe: false
+            dateNaissance: false
+            lieuNaissance: false
+          statutDuNomIdentifie: null
+    IdentificationView:
+      type: object
+      properties:
+        metadonnees:
+          type: object
+          properties:
+            dateIdentification:
+              type: string
+              format: date-time
+            codeReponseIdentification:
+              type: integer
+              description: 'Code indiquant la réponse du système d’identification
+                :
+
+                - 2 : demande identifiée sans divergence d’état civil
+
+                - 3 : demande identifiée avec divergence d’état civil ou NIR
+
+                - 4 : demande non identifiée mais existence d’un seul écho
+
+                - 6 : demande non identifiée mais existence de plus d’un écho
+
+                - 7 : demande identifiée avec le nom d’usage uniquement
+
+                - 8 : demande non identifiée sans écho
+
+                - 9 : demande rejetée au contrôle en raison d’erreurs de syntaxe
+
+                '
+              enum:
+              - 2
+              - 3
+              - 4
+              - 6
+              - 7
+              - 8
+              - 9
+            divergences:
+              type: object
+              properties:
+                nom:
+                  type: boolean
+                prenoms:
+                  type: boolean
+                sexe:
+                  type: boolean
+                dateNaissance:
+                  type: boolean
+                lieuNaissance:
+                  type: boolean
+            statutDuNomIdentifie:
+              type: string
+              description: 'Statut du nom identifié :
+
+                - "O" : Officiel
+
+                - "C" : Conjoint
+
+                - "AO" : Ancien officiel
+
+                - "AC" : Ancien conjoint
+
+                '
+              enum:
+              - O
+              - C
+              - AO
+              - AC
+        individu:
+          type: object
+          properties:
+            identites:
+              type: array
+              items:
+                type: object
+                properties:
+                  statut:
+                    type: string
+                    description: 'Statut de l’identité :
+
+                      - "O" : Officielle
+
+                      - "C" : Du conjoint
+
+                      '
+                    enum:
+                    - O
+                    - C
+                  nom:
+                    type: string
+                  prenoms:
+                    type: array
+                    items:
+                      type: string
+            sexe:
+              $ref: '#/components/schemas/Sexe'
+            naissance:
+              $ref: '#/components/schemas/EvenementView'
+            deces:
+              $ref: '#/components/schemas/EvenementView'
+      example:
+        metadonnees:
+          dateIdentification: 2025-06-03 09:17:45+00:00
+          codeReponseIdentification: 3
+          divergences:
+            nom: false
+            prenoms: false
+            sexe: false
+            dateNaissance: false
+            lieuNaissance: true
+          statutDuNomIdentifie: O
+        individu:
+          identites:
+          - statut: O
+            nom: DURAND
+            prenoms:
+            - Jeanne
+            - Catherine
+            - Marguerite
+          - statut: C
+            nom: DUPONT
+          sexe: F
+          naissance:
+            date: 1980-07-15
+            lieu:
+              code: '57463'
+              libelleCommune: Metz
+              libellePays: France
+            numeroActe: '1234'
+          deces:
+            date: 2025-06-15
+            lieu:
+              code: '76540'
+              libelleCommune: Rouen
+              libellePays: France
+            numeroActe: '15'
+    EvenementView:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        lieu:
+          type: object
+          properties:
+            code:
+              type: string
+            libelleCommune:
+              type: string
+            libellePays:
+              type: string
+        numeroActe:
+          type: string
+    ErreurChamp:
+      type: object
+      properties:
+        champ:
+          type: string
+          example: nom
+        message:
+          type: string
+          example: Le champ contient des caractères invalides ou dépasse 300 caractères
+    ErreurValidation:
+      type: object
+      properties:
+        erreurs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErreurChamp'
+    FrenchNationality:
+      type: boolean
+      description: Indique si la personne possède la nationalité française.
+      example: true
+      default: true
+    PhonePrefix:
+      minLength: 1
+      type: string
+      description: Indicatif téléphonique (alphanumérique). Si non renseigné, la valeur
+        par défaut utilisée est "+33". Obligatoire lorsque l'appelant est un ES, facultatif
+        lorsque l'appelant est un RPPS.
+      pattern: ^\+?[0-9A-Za-z]{1,5}$
+      example: '+33'
+      default: '+33'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: ESANTE-API-KEY
+      in: header
