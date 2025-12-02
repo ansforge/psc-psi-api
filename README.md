@@ -131,10 +131,12 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 -d '{
   "lastName": "DUPONT",
   "firstNames": "Jean Pierre",
-  "birthDate": "1990-01-01",
+  "birthDate": "1995-02-15",
   "genderCode": "M",
-  "birthLocationCode": "75056",
-  "email": "jean.dupont@example.com",
+  "birthLocationCode": "99103",
+  "birthPlace": "OSLO",
+  "professionalLastName": "Durant",
+  "email": "jean.dupont@gmail.com",
   "phone": "0612345678",
   "identifier": "8100112345678"
 }'
@@ -143,13 +145,18 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 **Réponse** :
 ```json
 {
-  "rppsIdentifiers": ["8100112345678"],
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "rppsIdentifiers": [
+    "810000000000"
+  ],
   "identityTraits": {
     "lastName": "DUPONT",
     "firstNames": "Jean Pierre",
-    "birthDate": "1990-01-01",
+    "birthDate": "1995-02-15",
     "genderCode": "M",
-    "birthLocationCode": "75056"
+    "birthLocationCode": "99103",
+    "birthPlace": "OSLO",
+    "professionalLastName": "Durant"
   }
 }
 ```
@@ -162,18 +169,31 @@ curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
   "firstNames": "Jean Pierre",
   "birthDate": "01-01-1990",  // Format incorrect
   "genderCode": "M",
-  "birthLocationCode": "75056"
+  "birthLocationCode": "99103",
+  "birthPlace": "OSLO",
+  "professionalLastName": "Durant",
+  "email": "jean.dupont@gmail.com",
+  "phone": "0612345678",
+  "identifier": "8100112345678"
 }
 ```
 
 **Réponse** :
 ```json
 {
-  "timestamp": "2024-02-27T14:45:00.593+00:00",
-  "status": 400,
-  "error": "Le format de date est invalide. Format attendu : aaaa-MM-jj",
-  "code": "E04_U010_KO_FORMAT_DATE",
-  "path": "/v1/identities"
+    "timestamp": "2025-12-01T15:22:22.954149+01:00",
+    "status": "400",
+    "error": "Des erreurs ont été détectées lors de la validation. Veuillez consulter le détail",
+    "detail": [
+        {
+            "object": "registerIdentityRequestDto",
+            "field": "birthDate",
+            "message": "Le format de date est invalide. Format attendu : aaaa-mm-jj",
+            "rejected": "01-01-1990",
+            "constraint": "DateTime"
+        }
+    ],
+    "path": "/v1/identities"
 }
 ```
 
