@@ -25,7 +25,7 @@ Cette documentation fournit une vue d'ensemble de la logique métier, des spéci
 
 Avant de commencer à utiliser l'API, assurez-vous de remplir les conditions suivantes :
 
-- **Accès à l'API** : Vous devez disposer des droits d'accès à l'URL Gravitee mentionnée ci-dessus. Pour cela, merci de remplir le formulaire de demande dipsonible à l'URL suivante :
+- **Accès à l'API** : Vous devez disposer des droits d'accès à l'URL Gravitee mentionnée ci-dessus. Pour cela, merci de remplir le formulaire de demande dipsonible à l'URL suivante : prochainement disponible
 - **Authentification** : Les appels à l'API nécessitent une authentification. Les clés d'API ou les jetons nécessaires vous seront fournis par l'administrateur ANS de Gravitee.
 - **Outils recommandés** :
   - Un outil pour tester les API REST, comme **Postman**.
