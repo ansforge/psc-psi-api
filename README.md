@@ -68,7 +68,7 @@ La logique métier de l'API est décrite dans le schéma suivant :
 ##### Requête
 - **Headers** :
   - `Content-Type: application/json`
-  - `Authorization: Bearer <token>`
+  - `esante-api-key: <votre api key>`
 - **Body** (exemple) :
 ```json
 {
@@ -131,7 +131,7 @@ Pour une liste complète des schémas, référez-vous au fichier Swagger.
 ```bash
 curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 -H "Content-Type: application/json" \
--H "Authorization: Bearer <token>" \
+-H "esante-api-key: <votre api key>" \
 -d '{
   "lastName": "DUPONT",
   "firstNames": "Jean Pierre",
