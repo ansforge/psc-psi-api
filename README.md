@@ -74,10 +74,12 @@ La logique métier de l'API est décrite dans le schéma suivant :
 {
   "lastName": "DUPONT",
   "firstNames": "Jean Pierre",
-  "birthDate": "1990-01-01",
+  "birthDate": "1995-02-15",
   "genderCode": "M",
-  "birthLocationCode": "75056",
-  "email": "jean.dupont@example.com",
+  "birthLocationCode": "99103",
+  "birthPlace": "OSLO",
+  "professionalLastName": "Durant",
+  "email": "jean.dupont@gmail.com",
   "phone": "0612345678",
   "identifier": "8100112345678"
 }
