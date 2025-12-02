@@ -108,6 +108,8 @@ Voici les principaux schémas utilisés par l'API :
   - `birthDate` (string) : Date de naissance (format ISO-8601).
   - `genderCode` (string) : Sexe (`M`, `F`, `I`).
   - `birthLocationCode` (string) : Code INSEE du lieu de naissance.
+  - `birthPlace` (string): libélé du lieu de naissance (à ne renseigner que si `birthLocationCode` est un pays étranger),
+  - `professionalLastName` (string): Nom d'exercice (nom de famille professionnel),
   - `email` (string) : Adresse e-mail.
   - `phone` (string) : Numéro de téléphone.
   - `identifier` (string) : Identifiant (optionnel)(ex. : identifiant RPPS).
