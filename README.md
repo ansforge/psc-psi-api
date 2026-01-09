@@ -133,6 +133,7 @@ Pour une liste complète des schémas, référez-vous au fichier Swagger.
 curl -X POST "https://apimgmtui.integ.api.esante.gouv.fr/v1/identities" \
 -H "Content-Type: application/json" \
 -H "esante-api-key: <votre api key>" \
+-H "X-Client-Type:ES" \
 -d '{
   "lastName": "DUPONT",
   "firstNames": "Jean Pierre",
