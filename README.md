@@ -742,30 +742,30 @@ Le Swagger contient également des codes de validation plus spécifiques, notamm
 
 # Exemples d'utilisation
 
-Tous les exemples ci-dessous sont disponibles dans le fichier : [[API_PSI_Exemples.md](API_PSI_Exemples.md)]
+Tous les exemples ci-dessous sont disponibles dans le fichier : [voir l'exemple](API_PSI_Exemples.md)
 D'autres exemples sont aussi dans le Swagger lui-même.
 
-## 1. Inscription simple (obsolete) [[API_PSI_Exemples.md](API_PSI_Exemples.md#1-inscription-simple)]
+## 1. Inscription simple (obsolete) [voir l'exemple](API_PSI_Exemples.md#1-inscription-simple)
 
 A ce jour l'insciption simple n'est plus acceptée. l'**ES** doit obligatoirement définir de type d'emploi de la personne enregistrée en renseignant le bloc `employment`.
 
-## 2. Inscription avec Employment [[API_PSI_Exemples.md](API_PSI_Exemples.md#2-inscription-avec-employment)]
+## 2. Inscription avec Employment [voir l'exemple](API_PSI_Exemples.md#2-inscription-avec-employment)
 
 L'établissement peut transmettre un bloc `employment` afin de déclarer l'emploi de la personne et l'établissement émetteur. Tous les autres exemples contiennent ce bloc.
 
-## 3. Inscription avec activité [[API_PSI_Exemples.md](API_PSI_Exemples.md#3-inscription-avec-activité)]
+## 3. Inscription avec activité [voir l'exemple](API_PSI_Exemples.md#3-inscription-avec-activité)
 
 L'établissement peut transmettre une activité qui concerne un PS RPPS (création/modification) grace au bloc `activity`
 
-## 4. Inscription avec commande de carte PSI [[API_PSI_Exemples.md](API_PSI_Exemples.md#4-inscription-avec-commande-de-carte-psi)]
+## 4. Inscription avec commande de carte PSI [voir l'exemple](API_PSI_Exemples.md#4-inscription-avec-commande-de-carte-psi)
 
-## 5. Inscription avec commande de carte CPS [[API_PSI_Exemples.md](API_PSI_Exemples.md#5-inscription-avec-commande-de-carte-cps)]
+## 5. Inscription avec commande de carte CPS [voir l'exemple](API_PSI_Exemples.md#5-inscription-avec-commande-de-carte-cps)
 
-## 6. Inscription avec activité et commande de carte [[API_PSI_Exemples.md](API_PSI_Exemples.md#6-inscription-avec-activité-et-commande-de-carte)]
+## 6. Inscription avec activité et commande de carte [voir l'exemple](API_PSI_Exemples.md#6-inscription-avec-activité-et-commande-de-carte)
 
 Les traitements peuvent être combinés dans une même requête.
 
-## 7. Professionnel étranger [[API_PSI_Exemples.md](API_PSI_Exemples.md#7-professionnel-étranger)]
+## 7. Professionnel étranger [voir l'exemple](API_PSI_Exemples.md#7-professionnel-étranger)
 
 Pour un professionnel de santé de nationalité étrangère, le `birthLocationCode` correspond au code INSEE du pays de naissance et `birthPlace` doit contenir le libellé de la ville étrangère.
 
