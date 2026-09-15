@@ -749,23 +749,23 @@ D'autres exemples sont aussi dans le Swagger lui-même.
 
 A ce jour l'insciption simple n'est plus acceptée. l'**ES** doit obligatoirement définir de type d'emploi de la personne enregistrée en renseignant le bloc `employment`.
 
-## 2. Inscription avec Employment
+## 2. Inscription avec Employment [[API_PSI_Exemples.md](API_PSI_Exemples.md#-2.-Inscription-avec-Employment)]
 
 L'établissement peut transmettre un bloc `employment` afin de déclarer l'emploi de la personne et l'établissement émetteur. Tous les autres exemples contiennent ce bloc.
 
-## 3. Inscription avec activité
+## 3. Inscription avec activité [[API_PSI_Exemples.md](API_PSI_Exemples.md#-3.-Inscription-avec-activité)]
 
 L'établissement peut transmettre une activité qui concerne un PS RPPS (création/modification) grace au bloc `activity`
 
-## 4. Inscription avec commande de carte PSI
+## 4. Inscription avec commande de carte PSI [[API_PSI_Exemples.md](API_PSI_Exemples.md#-4.-Inscription-avec-commande-de-carte-PSI)]
 
-## 5. Inscription avec commande de carte CPS
+## 5. Inscription avec commande de carte CPS [[API_PSI_Exemples.md](API_PSI_Exemples.md#-5.-Inscription-avec-commande-de-carte-CPS)]
 
-## 6. Inscription avec activité et commande de carte
+## 6. Inscription avec activité et commande de carte [[API_PSI_Exemples.md](API_PSI_Exemples.md#-6.-Inscription-avec-activité-et-commande-de-carte)]
 
 Les traitements peuvent être combinés dans une même requête.
 
-## 7. Professionnel étranger
+## 7. Professionnel étranger [[API_PSI_Exemples.md](API_PSI_Exemples.md#-7.-Professionnel-étranger)]
 
 Pour un professionnel de santé de nationalité étrangère, le `birthLocationCode` correspond au code INSEE du pays de naissance et `birthPlace` doit contenir le libellé de la ville étrangère.
 
