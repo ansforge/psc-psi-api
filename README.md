@@ -743,6 +743,7 @@ Le Swagger contient également des codes de validation plus spécifiques, notamm
 # Exemples d'utilisation
 
 Tous les exemples ci-dessous sont disponibles dans le fichier : [[API_PSI_Exemples.md](API_PSI_Exemples.md)]
+D'autres exemples sont aussi dans le Swagger lui-même.
 
 ## 1. Inscription simple (obsolete)
 
@@ -993,7 +994,7 @@ Exemple de succès :
 - [[E04_C.jpg](E04_C.jpg)]
 - [[E04_D.jpg](E04_D.jpg)]
 - **Collection Postman** : [Collection POSTMAN PSI](https://www.postman.com/red-rocket-401896/ans-prosanteconnect/collection/28025856-53c7-43c561-4d99-b1d7-83bcf61e82ca?action=share&source=copy-link&creator=28025856)
-
+- **Fichier d'exemples** : [[API_PSI_Exemples.md](API_PSI_Exemples.md)]
 ---
 
 ## Référence de la version
