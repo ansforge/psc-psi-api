@@ -745,7 +745,7 @@ Le Swagger contient également des codes de validation plus spécifiques, notamm
 Tous les exemples ci-dessous sont disponibles dans le fichier : [[API_PSI_Exemples.md](API_PSI_Exemples.md)]
 D'autres exemples sont aussi dans le Swagger lui-même.
 
-## 1. Inscription simple (obsolete) [[API_PSI_Exemples.md](API_PSI_Exemples.md# 1. Inscription simple)]
+## 1. Inscription simple (obsolete) [[API_PSI_Exemples.md](API_PSI_Exemples.md#-1.-Inscription-simple)]
 
 A ce jour l'insciption simple n'est plus acceptée. l'**ES** doit obligatoirement définir de type d'emploi de la personne enregistrée en renseignant le bloc `employment`.
 
