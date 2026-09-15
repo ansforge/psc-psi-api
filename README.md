@@ -65,7 +65,7 @@ L'API est exposée via **Gravitee** de l'ANS à l'adresse :
 
 **https://psi-partenaire.gateway.api.esante.gouv.fr**
 
-> La présente documentation est dérivée du Swagger `PSI_swagger_activity_card (2026-09-07).yml`, version `v0.9.0`.
+> La présente documentation est dérivée du Swagger `PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml`, version `v0.9.0`.
 
 ---
 
@@ -132,10 +132,14 @@ Pour faciliter la lecture des schémas :
 - **PSI** : Pro Santé Identité
 - **RNIPP** : Répertoire national d'identification des personnes physiques
 - **RPPS** : Répertoire partagé des Professionnels intervenant dnas le systeème de santé
-- **SEC-PSC** : Remplacer "SEC PSC" par "API PSC" : API permettant d'interroger le réferentiel PSC contenant les CPE, CPA, les RPPS à J+1 et les MIE
+- **SEC-PSC** : Remplacer "SEC-PSC" par "API PSC" : API permettant d'interroger le réferentiel PSC contenant les CPE, CPA, les RPPS à J+1 et les MIE
 
-
-
+### Schémas de la logique métier
+ [[E04_Chapeau.jpg](E04_Chapeau.jpg)]
+ [[E04_A.jpg](E04_A.jpg)]
+ [[E04_B.jpg](E04_B.jpg)]
+ [[E04_C.jpg](E04_C.jpg)]
+ [[E04_D.jpg](E04_D.jpg)]
 
 ---
 
@@ -360,7 +364,7 @@ Le Swagger définit actuellement les postes suivants :
 - `Professionnel Qualité, hygiène, sécurité et environnement`
 - `Professionnel Recherche clinique`
 - `Professionnel Social, éducatif, psychologique et culturel`
-- `Professionnel Soin` (qui est le seul accepté à ce jour)
+- `Professionnel Soin` **<== qui est la seule valeur acceptée à ce jour**
 - `Professionnel Systèmes d'information`
 - `Autorité de certification d'identité EDC PSC`
 
@@ -526,7 +530,9 @@ Les trois champs suivants sont mutuellement exclusifs :
 - `numSIRET`
 - `rppsRank`
 
-Si l'un d'eux est renseigné, les deux autres ne doivent pas l'être.
+Si l'un d'eux est renseigné, les deux autres ne doivent pas l'être:
+- Soit donner aux attributs non valorisés la valeur `null`
+- Soit ne pas envoyer les attributs non valorisés dans la requête.
 
 | Champ | Format |
 |---|---|
@@ -587,6 +593,7 @@ Lorsque `country` est renseigné avec une valeur différente de `FRANCE`, les ch
 # Bloc Card Order CPS
 
 Le bloc `cardOrderCps` permet de déclencher une **commande de carte CPS**.
+L'adresse de livraison est récupérée depuis le RPPS, l'API PSI ne permet pas de modifier l'adresse de livraison pour la commande de carte CPS.
 
 ## Structure
 
@@ -975,9 +982,14 @@ Exemple de succès :
 
 # Ressources supplémentaires
 
-- **Swagger / OpenAPI** : `PSI_swagger_activity_card (2026-09-07).yml`
+- **Swagger / OpenAPI** : [[PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml](PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml)]
 - **API** : `https://psi-partenaire.gateway.api.esante.gouv.fr`
-- **Schéma de la logique métier** : `PSI_Enrolement_par_un_tiers_(Logigramme).jpg`
+- **Schéma de la logique métier** : 
+- [[E04_Chapeau.jpg](E04_Chapeau.jpg)]
+- [[E04_A.jpg](E04_A.jpg)]
+- [[E04_B.jpg](E04_B.jpg)]
+- [[E04_C.jpg](E04_C.jpg)]
+- [[E04_D.jpg](E04_D.jpg)]
 - **Collection Postman** : [Collection POSTMAN PSI](https://www.postman.com/red-rocket-401896/ans-prosanteconnect/collection/28025856-53c7-43c561-4d99-b1d7-83bcf61e82ca?action=share&source=copy-link&creator=28025856)
 
 ---
