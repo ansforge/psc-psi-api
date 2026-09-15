@@ -986,7 +986,7 @@ Exemple de succès :
 - **API** : `https://psi-partenaire.gateway.api.esante.gouv.fr`
 - **Schéma de la logique métier** : 
 - [[E04_Chapeau.jpg](E04_Chapeau.jpg)]
-- [[E04_A.jpg](E04_A.jpg)]
+- [[E04_A_Traitements_communs.jpg](E04_A_Traitements_communs.jpg)]
 - [[E04_B.jpg](E04_B.jpg)]
 - [[E04_C.jpg](E04_C.jpg)]
 - [[E04_D.jpg](E04_D.jpg)]
