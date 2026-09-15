@@ -136,7 +136,7 @@ Pour faciliter la lecture des schémas :
 
 ### Schémas de la logique métier
  [[E04_Chapeau.jpg](E04_Chapeau.jpg)]
- [[E04_A Traitements communs.jpg](E04_A Traitements communs.jpg)]
+ [[E04_A_Traitements_communs.jpg](E04_A_Traitements_communs.jpg)]
  [[E04_B.jpg](E04_B.jpg)]
  [[E04_C.jpg](E04_C.jpg)]
  [[E04_D.jpg](E04_D.jpg)]
