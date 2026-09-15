@@ -275,7 +275,7 @@ Attention les blocs cardOrderPsi et cardOrderCps sont exclusifs, seul l'un des d
 
 D'après le Swagger :
 
-- `email` et `phone` sont obligatoires ;
+- `email` et `phone` ne sont pas obligatoires ;
 - pour un professionnel de santé **non français**, `identifier` est obligatoire et peut être de type RPPS, ou un identifiant local (comme pour les CPE, CPA) ;
 - si `cardOrderCps` est présent, `identifier` doit être de type RPPS.
 
