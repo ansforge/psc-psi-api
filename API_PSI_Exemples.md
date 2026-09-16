@@ -114,7 +114,7 @@ L'établissement peut transmettre un bloc `employment` afin de déclarer l'emplo
     "employmentEndDate": "2027-06-15"
   },
   "activity": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C",
     "activityStartDate": "2026-06-15",
     "activityEndDate": "2027-06-30",
@@ -301,7 +301,7 @@ L'établissement peut transmettre un bloc `employment` afin de déclarer l'emplo
     "employmentEndDate": "2027-06-15"
   },
   "cardOrderCps": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C"
   }
 }
@@ -387,7 +387,7 @@ Les traitements peuvent être combinés dans une même requête.
   },
 
   "activity": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C",
     "activityStartDate": "2026-06-15",
     "activityEndDate": "2027-06-30",
@@ -401,7 +401,7 @@ Les traitements peuvent être combinés dans une même requête.
   },
 
   "cardOrderCps": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C"
   }
 }
