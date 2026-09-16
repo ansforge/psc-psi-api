@@ -210,7 +210,7 @@ La structure générale est la suivante :
   },
 
   "activity": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C",
     "activityStartDate": "2026-06-15",
     "activityEndDate": "2027-06-30",
@@ -236,7 +236,7 @@ La structure générale est la suivante :
   },
 
   "cardOrderCps": {
-    "professionCode": "15",
+    "professionCode": "10",
     "professionalCategoryCode": "C"
   }
 }
@@ -384,7 +384,7 @@ Le bloc `activity` permet de **créer ou modifier une activité**. Ce bloc est r
 
 ```json
 "activity": {
-  "professionCode": "15",
+  "professionCode": "10",
   "professionalCategoryCode": "C",
   "activityStartDate": "2026-06-15",
   "activityEndDate": "2027-06-30",
@@ -599,7 +599,7 @@ L'adresse de livraison est récupérée depuis le RPPS, l'API PSI ne permet pas 
 
 ```json
 "cardOrderCps": {
-  "professionCode": "15",
+  "professionCode": "10",
   "professionalCategoryCode": "C"
 }
 ```
