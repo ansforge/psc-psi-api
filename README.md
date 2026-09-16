@@ -1,8 +1,8 @@
 # Documentation de l'API PSI
 
-> **Version de l'API : v0.9.0**  
+> **Version de l'API : v0.9.1**  
 > **OpenAPI : 3.0.3**  
-> **Dernière définition Swagger : 07/09/2026**
+> **Dernière définition Swagger : 15/09/2026**
 
 L'API **Pro Santé Identité (PSI)** permet aux acteurs habilités d'interagir avec le service PSI pour :
 
@@ -65,7 +65,7 @@ L'API est exposée via **Gravitee** de l'ANS à l'adresse :
 
 **https://psi-partenaire.gateway.api.esante.gouv.fr**
 
-> La présente documentation est dérivée du Swagger `PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml`, version `v0.9.0`.
+> La présente documentation est dérivée du Swagger `PSI_swagger_activity_card_v0.9.1_(2026-09-15).yml`, version `v0.9.1`.
 
 ---
 
@@ -985,7 +985,7 @@ Exemple de succès :
 
 # Ressources supplémentaires
 
-- **Swagger / OpenAPI** : [[PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml](PSI_swagger_activity_card_v0.9.0_(2026-09-07).yml)]
+- **Swagger / OpenAPI** : [[PSI_swagger_activity_card_v0.9.1_(2026-09-15).yml](PSI_swagger_activity_card_v0.9.1_(2026-09-15).yml)]
 - **API** : `https://psi-partenaire.gateway.api.esante.gouv.fr`
 - **Schéma de la logique métier** : 
 - [[E04_Chapeau.jpg](E04_Chapeau.jpg)]
@@ -1002,8 +1002,8 @@ Exemple de succès :
 Cette documentation correspond à la définition OpenAPI :
 
 ```text
-title   : PSI swagger 24-07-2026
-version : v0.9.0
+title   : PSI swagger 15-09-2026
+version : v0.9.1
 OpenAPI : 3.0.3
 ```
 
